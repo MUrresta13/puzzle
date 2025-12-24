@@ -13,20 +13,26 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
+
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--ink);
   background: radial-gradient(900px 600px at 60% 10%, #1a2f7a 0%, var(--bg) 60%, #02030a 100%);
-  overflow:hidden;
+
+  /* critical: stop iOS from "centering" overflowed content */
+  overflow-x:hidden;
+  overflow-y:hidden;
 }
 
+/* Screens */
 .screen{
   height:100%;
   display:none;
   align-items:center;
   justify-content:center;
   padding:18px;
+  width:100%;
 }
 .screen.active{display:flex}
 .screen.intro{ background:#000; }
@@ -67,12 +73,19 @@ body{
 h1{ margin: 0 0 10px; font-size: clamp(2.1rem, 4.8vw, 3.2rem); }
 .sub{ margin: 0 0 16px; color: rgba(255,255,255,.86); line-height:1.35; }
 
-.game{ align-items:flex-start; justify-content:flex-start; padding:0; }
+/* Game screen */
+.game{
+  align-items:flex-start;
+  justify-content:flex-start;
+  padding:0;
+  width:100%;
+}
 
+/* Top bar */
 .topbar{
   position: sticky;
-  top:0;
-  width:100%;
+  top: 0;
+  width: 100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -82,7 +95,13 @@ h1{ margin: 0 0 10px; font-size: clamp(2.1rem, 4.8vw, 3.2rem); }
   background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.05));
   backdrop-filter: blur(10px);
   border-bottom:1px solid rgba(255,255,255,.08);
+
+  /* safe area for iPhone notch */
+  padding-top: calc(12px + env(safe-area-inset-top));
+  padding-left: calc(12px + env(safe-area-inset-left));
+  padding-right: calc(12px + env(safe-area-inset-right));
 }
+
 .pill{
   display:flex;
   gap:10px;
@@ -91,27 +110,45 @@ h1{ margin: 0 0 10px; font-size: clamp(2.1rem, 4.8vw, 3.2rem); }
   border-radius: 999px;
   background: rgba(0,0,0,.22);
   border:1px solid rgba(255,255,255,.10);
+  min-width: 118px;
 }
 .label{ color: rgba(255,255,255,.72); font-size:.9rem; font-weight:900; }
 .value{ font-weight: 1000; }
 .actions{ display:flex; gap:8px; }
 
+/* Layout: FORCE full width, no sideways drift */
 .layout{
-  width:min(1100px, 96vw);
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 12px;
+  padding-left: calc(12px + env(safe-area-inset-left));
+  padding-right: calc(12px + env(safe-area-inset-right));
   display:grid;
   grid-template-columns: 1fr;
   gap: 12px;
-  height: calc(100vh - 64px);
-  overflow:auto;
-  padding-bottom: 18px;
-}
-@media (min-width: 920px){
-  .layout{ grid-template-columns: 1fr 1fr; align-items:start; }
+
+  /* allow vertical scrolling within the game screen */
+  height: calc(100vh - 72px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling: touch;
+
+  /* prevent "mystery" width calculations */
+  min-width: 0;
 }
 
+@media (min-width: 920px){
+  .layout{
+    grid-template-columns: 1fr 1fr;
+    align-items:start;
+  }
+}
+
+/* Panels */
 .panel{
+  width:100%;
+  min-width:0;
   border-radius: 22px;
   background: var(--card);
   border:1px solid var(--line);
@@ -120,12 +157,12 @@ h1{ margin: 0 0 10px; font-size: clamp(2.1rem, 4.8vw, 3.2rem); }
   backdrop-filter: blur(10px);
 }
 
-h2{ margin: 4px 0 10px; }
-
+/* Board + reference sizes: always fit phone width */
 .board{
-  width: min(92vw, 520px);
-  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 520px;
   margin: 0 auto;
+  aspect-ratio: 1 / 1;
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
@@ -180,8 +217,10 @@ h2{ margin: 4px 0 10px; }
 .status{ margin-top:10px; color: rgba(255,255,255,.86); font-weight:900; }
 .tiny{ margin-top:10px; color: rgba(255,255,255,.75); }
 
+/* Reference image */
 .refWrap{
-  width: min(92vw, 520px);
+  width: 100%;
+  max-width: 520px;
   margin: 0 auto;
   border-radius: 18px;
   overflow:hidden;
