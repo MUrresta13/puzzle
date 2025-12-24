@@ -223,7 +223,7 @@ btnPlay.addEventListener("click", () => {
 });
 
 btnShuffle.addEventListener("click", () => resetGame(true));
-btnReset.addEventListener("click", () => resetGame(false));
+btnReset.addEventListener("click", () => resetGame(true)); // Reset = re-scramble
 
 btnAgain.addEventListener("click", () => resetGame(true));
 btnBackTitle.addEventListener("click", () => showScreen(screenTitle));
