@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Santa Slide Puzzle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- INTRO -->
+  <section id="screenIntro" class="screen intro active">
+    <button id="btnStart" class="btn primary big">Start Challenge</button>
+  </section>
+
+  <!-- TITLE -->
+  <section id="screenTitle" class="screen title">
+    <div class="card">
+      <h1>Santa Slide</h1>
+      <p class="sub">Slide the tiles to rebuild Santa’s picture. One space is empty—use it to move tiles into place.</p>
+      <button id="btnPlay" class="btn primary">Play Game</button>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="screenGame" class="screen game">
+    <header class="topbar">
+      <div class="pill">
+        <div class="label">Moves</div>
+        <div id="moves" class="value">0</div>
+      </div>
+
+      <div class="actions">
+        <button id="btnShuffle" class="btn ghost">Shuffle</button>
+        <button id="btnReset" class="btn ghost">Reset</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div class="panel">
+        <h2>Puzzle</h2>
+        <div id="board" class="board" aria-label="Sliding puzzle board"></div>
+        <div id="status" class="status">Tap a tile next to the empty space to move it.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Reference</h2>
+        <div class="refWrap">
+          <img id="refImg" src="Santa.PNG" alt="Reference image of Santa" />
+        </div>
+        <div class="tiny">Goal: make the left puzzle match this image.</div>
+      </div>
+    </main>
+  </section>
+
+  <!-- WIN MODAL -->
+  <div id="winModal" class="modal" aria-hidden="true">
+    <div class="modalBox">
+      <h2>Puzzle Solved</h2>
+      <p>You assembled the image.</p>
+
+      <div class="codeBox">
+        <div class="codeLabel">PASSCODE</div>
+        <div class="codeValue">GIFTSARENEVERFREE</div>
+      </div>
+
+      <div class="modalBtns">
+        <button id="btnCopy" class="btn primary">Copy Code</button>
+        <button id="btnAgain" class="btn ghost">Play Again</button>
+        <button id="btnBackTitle" class="btn ghost">Back to Title</button>
+      </div>
+
+      <div id="copyMsg" class="copyMsg"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
